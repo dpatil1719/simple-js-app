@@ -1,2 +1,3 @@
-let simpleAddition = 2 + 2;
-document.write(simpleAddition);
+alert('Hello world');
+let favoriteFood = 'Sandwich';
+document.write(favoriteFood);
