@@ -1,17 +1,35 @@
-let pokemonList = [
-  { name: "Bulbasaur", height: 7, types: ["grass", "poison"] },
-  { name: "Ivysaur", height: 1, types: ["grass", "poison"] },
-  { name: "Venusaur", height: 2, types: ["grass", "poison"] },
-];
+// IIFE that contains the pokemonList
+let pokemonRepository = (function () {
+    let pokemonList = [
+        { name: "Bulbasaur", height: 7, types: ["grass", "poison"] },
+        { name: "Ivysaur", height: 1, types: ["grass", "poison"] },
+        { name: "Venusaur", height: 2, types: ["grass", "poison"] },
+    ];
+    // Function to return the list
+    function getAll() {
+        return pokemonList;
+    }
 
-// Loop through each Pokémon in the list
-for (let i = 0; i < pokemonList.length; i++) {
-  //Store the output of name & height
-  let output = pokemonList[i].name + " (height: " + pokemonList[i].height + ")";
+    // Function to add a new Pokémon to the list
+    function add(pokemon) {
+        pokemonList.push(pokemon);
+    }
 
-  //Check if the height is more than 10
-  if (pokemonList[i].height > 6) output += " - Wow, that’s big!";
+    // Public API (returned object)
+    return {
+        getAll: getAll,
+        add: add
+    };
+})();
 
-  //Print output to webpage
-  document.write(output + "<br>");
-}
+//  Loop through each Pokémon using forEach
+pokemonRepository.getAll().forEach(function (pokemon) {
+    let description = pokemon.name + " (height: " + pokemon.height + ")" + " " +"(types:" + pokemon.types + ")";
+
+    if (pokemon.height > 6) {
+        description += " - Wow, that’s big!";
+    }
+
+    document.write(description + "<br>");
+});
+
