@@ -1,63 +1,75 @@
 // IIFE that contains the pokemonList
 let pokemonRepository = (function () {
-    let pokemonList = [
-        { name: "Bulbasaur", height: 7 },
-        { name: "Ivysaur", height: 1 },
-        { name: "Venusaur", height: 2 }
+    let repository = [
+        {
+            name: "Bulbasaur",
+            height: 0.7,
+            types: ["grass", "poison"],
+        },
+        {
+            name: "Charizard",
+            height: 1.7,
+            types: ["fire", "flying"],
+        },
+        {
+            name: "Squirtle",
+            height: 1,
+            types: ["water"],
+        },
     ];
-
     // Function to add a new Pokémon to the list
     function add(pokemon) {
         if (
             typeof pokemon === "object" &&
-            pokemon !== null &&
-            Object.keys(pokemon).length === 2 &&
             "name" in pokemon &&
-            "height" in pokemon
+            "height" in pokemon &&
+            "types" in pokemon
         ) {
-            pokemonList.push(pokemon);
+            repository.push(pokemon);
         } else {
-            console.error(" Invalid Pokémon. Must be an object with name and height.");
+            console.log("pokemon is not correct");
         }
     }
-
-    // Function to return the list
     function getAll() {
-        return pokemonList;
+        return repository;
     }
-    // ✅ Filters Pokémon by name (case-insensitive)
-    function filterByName(name) {
-        return pokemonList.filter(function (pokemon) {
-            return pokemon.name.toLowerCase() === name.toLowerCase();
+
+    // Function to log details of a Pokémon to the console
+    function showDetails(pokemon) {
+        console.log(pokemon);
+    }
+    function addListItem(pokemon) {
+        let pokemonList = document.querySelector(".pokemon-list");
+        let listpokemon = document.createElement("li");
+        let button = document.createElement("button");
+        button.innerText = pokemon.name;
+        button.classList.add("button-class");
+        // Add click event listener to the button
+        button.addEventListener("click", function () {
+            showDetails(pokemon); // Call showDetails() when clicked
         });
+
+        listpokemon.appendChild(button);
+        pokemonList.appendChild(listpokemon);
     }
-    // Public API (returned object)
     return {
-        getAll: getAll,
         add: add,
-        filterByName: filterByName
+        getAll: getAll,
+        addListItem: addListItem,
     };
 })();
 
+pokemonRepository.add({ name: "Pikachu", height: 0.3, types: ["electric"] });
 
+console.log(pokemonRepository.getAll());
 
-//  Loop through each Pokémon using forEach
 pokemonRepository.getAll().forEach(function (pokemon) {
-    let description = pokemon.name + " (height: " + pokemon.height + ")";
-
-    if (pokemon.height > 6) {
-        description += " - Wow, that’s big!";
-    }
-
-    document.write(description + "<br>");
+    pokemonRepository.addListItem(pokemon);
 });
 
-//  Sample add & search test calls 
-pokemonRepository.add({ name: "Pikachu", height: 4 });
-pokemonRepository.add({ name: "Mewtwo", height: "tall" });
-pokemonRepository.add({ name: "Onix", height: 28 });
-
-console.log("All Pokémon:", pokemonRepository.getAll());
-console.log("Search 'Pikachu':", pokemonRepository.filterByName("Pikachu"));
-
-
+// ✅ Filters Pokémon by name (case-insensitive)
+function filterByName(name) {
+    return pokemonList.filter(function (pokemon) {
+        return pokemon.name.toLowerCase() === name.toLowerCase();
+    });
+}
