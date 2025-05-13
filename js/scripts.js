@@ -126,3 +126,8 @@ pokemonRepository.loadList().then(() => {
     addListItem(pokemon);
   });
 });
+
+
+
+
+
